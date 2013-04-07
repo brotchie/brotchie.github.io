@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>James Brotchie - Finance ∪ Software ∪ Open Source</title>
+
+        <link href="http://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+
+        <link href="theme/css/style.less" rel="stylesheet/less" type="text/css"/>
+        <link href="theme/css/pygment.css" rel="stylesheet" type="text/css"/>
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.6.1/jquery.lettering.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/1.5.25/jquery.isotope.min.js"></script>
+    </head>
+    <body>
+            <div class="title-box article">
+        <h1><a href="/" class="animated-link">James Brotchie</a></h1>
+        <h2>Finance;<br>Software;<br>Open Source.</h2>
+    </div>
+
+    <div id="article-wrapper">
+        <article>
+        <h1><a class="animated-link" href="simple-python-metaclass-example.html">A simple python __metaclass__ example</a></h1>
+            <h2>
+                <span class="author">James Brotchie</span><br>
+                <time class="timestamp">23 November 2009</time>
+            </h2>
+            <div class="entry-content">
+                <p>Metaclasses seem to be an obscure, misunderstood area of Python’s object model. Here is a simple example that I’ve used to both understand and explain <em>what</em> metaclasses are, and <em>how</em> they can be used.</p>
+<p>This code snippet was spawned from a colleague’s query.</p>
+<p><em>"What would be the most pythonic way to override a class type’s string representation?"</em></p>
+<p>Expressed in code, he wanted a new-style class type A to behave like</p>
+<div class="codehilite"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">A</span>
+<span class="go">&lt;class &#39;__main__.A&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="go">&#39;Hello World&#39;</span>
+</pre></div>
+
+
+<p>Unfotunately, overriding A’s <code>__str__</code> method</p>
+<div class="codehilite"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="gp">... </span> <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>  <span class="k">return</span> <span class="s">&quot;Hello World&quot;</span>
+<span class="gp">... </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span>
+<span class="go">&lt;class &#39;__main__.A&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="go">&quot;&lt;class &#39;__main__.A&#39;&gt;&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">())</span>
+<span class="go">&#39;Hello World&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+
+
+<p>only overrides the string representation of <em>instances</em> of A, rather than <em>type</em> A.</p>
+<p>Metaclasses are the solution to this dilemma. My colleague’s conundrum can be solved by creating a new-style class with base <code>type</code> and a <code>__str__</code> method. This acts to override the <code>__str__</code> method of A’s <em>type</em> rather than instances of A.</p>
+<div class="codehilite"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">meta_A</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+<span class="gp">... </span> <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+<span class="gp">... </span>  <span class="k">return</span> <span class="s">&quot;Hello World&quot;</span>
+<span class="gp">... </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="gp">... </span> <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">meta_A</span>
+<span class="gp">... </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span>
+<span class="go">&lt;class &#39;__main__.A&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="go">&#39;Hello World&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">A</span><span class="p">())</span>
+<span class="go">&#39;&lt;__main__.A object at 0x10049e710&gt;&#39;</span>
+</pre></div>
+
+
+<p>Thus, we have a pythonic mechanism for overriding the string representation of any class type.</p>
+<p>Note that there is new syntax in Python 3+ for specifying a metaclass.</p>
+<div class="codehilite"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">meta_A</span><span class="p">):</span>
+<span class="gp">... </span> <span class="k">pass</span>
+<span class="gp">...</span>
+</pre></div>
+            </div>
+        </article>
+    </div>
+
+        <script>
+            $(document).ready(function(){
+                $('.animated-link').lettering();
+            });
+        </script>
+        <footer>
+            <p class="copyright">&copy; 2013 James Brotchie</p>
+            <div>
+                <a href="http://twitter.com/brotchie"><span class="icon-2x icon-twitter"></span></a>
+                <a href="http://github.com/brotchie"><span class="icon-2x icon-github"></span></a>
+                <!--<span class="icon-2x icon-linkedin"></span>-->
+            </div>
+        </footer>
+
+    </body>
+</html>

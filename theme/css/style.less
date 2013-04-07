@@ -1,0 +1,323 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Style */
+
+body {
+    background: url('../img/old_mathematics.png');
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.item {
+    width: 250px;
+    margin: 10px;
+    padding: 20px;
+}
+
+a.animated-link {
+    text-decoration: none;
+    color: black;
+}
+
+a.animated-link, a.animated-link span {
+    -webkit-transition-duration: 0.8s;
+    -webkit-transition-property: color top left background;
+    position: relative;
+}
+
+a.animated-link:hover {
+    background: black;
+}
+
+a.animated-link:hover span {
+    color: white;
+}
+
+a.animated-link span:nth-child(8n)   {-webkit-transition-delay: 0.05s;}
+a.animated-link span:nth-child(8n+1) {-webkit-transition-delay: 0.10s;}
+a.animated-link span:nth-child(8n+2) {-webkit-transition-delay: 0.15s;}
+a.animated-link span:nth-child(8n+3) {-webkit-transition-delay: 0.20s;}
+a.animated-link span:nth-child(8n+4) {-webkit-transition-delay: 0.25s;}
+a.animated-link span:nth-child(8n+5) {-webkit-transition-delay: 0.30s;}
+a.animated-link span:nth-child(8n+6) {-webkit-transition-delay: 0.35s;}
+a.animated-link span:nth-child(8n+7) {-webkit-transition-delay: 0.40s;}
+
+.item-post {
+    h2 {
+        text-transform: uppercase;
+        font-size: 30px;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+
+    h3 {
+        text-transform: uppercase;
+        font-weight: 500;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    h3.date {
+        text-align: right;
+    }
+
+    h3.tag {
+        float: left;
+    }
+
+    .hrgroup {
+        border-bottom: 3px rgba(0,0,0,0.75) solid;
+    }
+
+    p {
+        font-weight: 100;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding-left: 2px;
+        line-height: 1.5;
+    }
+}
+
+.title-box.article,
+.title-box.article a{
+    color: rgba(0,0,0,0.5);
+}
+
+#article-wrapper {
+    margin-left: 250px;
+
+    article {
+        padding-top: 50px;
+        margin-left: 80px;
+        margin-right: 80px;
+        h1 {
+            text-transform: uppercase;
+            font-size: 40px;
+            text-align: center;
+            font-weight: 700;
+        }
+        h2 {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 500;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+        .entry-content {
+            margin-top: 30px;
+            font-size: 120%;
+            line-height: 150%;
+            p {
+                margin-top: 1em;
+                margin-bottom: 1em;
+            }
+        }
+        code {
+            padding: 2px;
+            padding-left: 4px;
+            padding-right: 4px;
+            font-size: 80%;
+            font-family: Consolas, "Liberation Mono", Courier, monospace;
+            background: rgba(200,200,200,0.5);
+            border: 1px rgba(0,0,0,0.15) solid;
+            border-radius: 2px;
+        }
+        em {
+            font-style: italic;
+        }
+        .codehilite pre {
+            margin-left: 10px;
+            margin-right: 10px;
+            padding-left: 10px;
+            font-size: 80%;
+            font-family: Consolas, "Liberation Mono", Courier, monospace;
+            background: rgba(200,200,200,0.5);
+            border: 1px rgba(0,0,0,0.15) solid;
+            border-radius: 2px;
+        }
+    }
+}
+
+#filters {
+    margin-top: 20px;
+    margin-left: 28px;
+}
+
+#filters li {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+#filters a {
+    text-decoration: none;
+    text-transform: capitalize;
+    padding: 2px;
+    color: black;
+
+    -webkit-transition-duration: 0.5s;
+    -webkit-transition-property: color background;
+}
+
+#filters a.active {
+    color: white;
+    background: black;
+}
+
+.tag-matlab .tag,
+#filters .tag-matlab{
+    color: red;
+}
+
+.tag-python .tag,
+#filters .tag-python {
+    color: green;
+}
+
+.tag-open-source .tag,
+#filters .tag-open-source {
+    color: blue;
+}
+
+.tag-academia .tag,
+#filters .tag-academia {
+    color: orange;
+}
+
+.title-box {
+    width: 200px;
+    margin: 10px;
+    padding: 20px;
+    float: left; 
+
+    h1 {
+        //font-variant: small-caps;
+        font-weight: 700;
+        font-size: 50px;
+        text-shadow: 1px 1px rgba(0,0,0,0.1);
+    }
+    h2 {
+        padding-left: 5px;
+        padding-top: 5px;
+        font-weight: 300;
+        font-size: 30px;
+    }
+}
+
+footer {
+    margin-top: 50px;
+    margin-left: 290px;
+    width: 500px;
+    .copyright {
+        font-weight: 500;
+    }
+
+    p {
+        float: left;
+    }
+
+    div {
+        text-align: right;
+        a {
+            -webkit-transition-duration: 0.8s;
+            -webkit-transition-property: color top left background;
+            text-decoration: none;
+            color: #bbbbbb;
+        }
+        a:hover {
+            color: black;
+        }
+        span {
+            font-size: 16px;
+            padding: 5px;
+        }
+    }
+}
+
+/* isotope */
+.isotope,
+.isotope .isotope-item {
+  /* change duration value to whatever you like */
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+      -ms-transition-property:     -ms-transform, opacity;
+       -o-transition-property:      -o-transform, opacity;
+          transition-property:         transform, opacity;
+}
+
+/**** disabling Isotope CSS3 transitions ****/
+
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+       -o-transition-duration: 0s;
+          transition-duration: 0s;
+}

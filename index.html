@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>James Brotchie - Finance ∪ Software ∪ Open Source</title>
+
+        <link href="http://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+
+        <link href="theme/css/style.less" rel="stylesheet/less" type="text/css"/>
+        <link href="theme/css/pygment.css" rel="stylesheet" type="text/css"/>
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.6.1/jquery.lettering.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/1.5.25/jquery.isotope.min.js"></script>
+    </head>
+    <body>
+                <div class="title-box">
+            <h1><a href="/" class="animated-link">James Brotchie</a></h1>
+            <h2>Finance;<br>Software;<br>Open Source.</h2>
+            <ul id="filters">
+                <li><a href="#" class="animated-link tag-everything active" data-filter="*">everything</a></li>
+                <li><a href="#" class="animated-link tag-matlab" data-filter=".tag-matlab">matlab</a></li>
+                <li><a href="#" class="animated-link tag-python" data-filter=".tag-python">python</a></li>
+                <li><a href="#" class="animated-link tag-academia" data-filter=".tag-academia">academia</a></li>
+                <li><a href="#" class="animated-link tag-open-source" data-filter=".tag-open-source">open source</a></li>
+            </ul>
+        </div>
+        <div id="container">
+                            <div class="item item-post tag-python">
+                    <div class="hrgroup">
+                        <h2><a href="/term-structure-interpolation-methods-quantlib-python.html" class="animated-link">Python bindings for more QuantLib term structure interpolation methods</a></h2>
+                        <h3 class="tag">python</h3>
+                        <h3 class="date">02 February 2010</h3>
+                    </div>
+                    <div>
+                        <p>
+                            Out-of-the-box, QuantLib's Python bindings do not support the full range of term structure interpolation methods. I show how you can include additional interpolations by modifying QuantLib's SWIG interface files.
+                        </p>
+                    </div>
+                </div>
+                            <div class="item item-post tag-python">
+                    <div class="hrgroup">
+                        <h2><a href="/simple-python-metaclass-example.html" class="animated-link">A simple python __metaclass__ example</a></h2>
+                        <h3 class="tag">python</h3>
+                        <h3 class="date">23 November 2009</h3>
+                    </div>
+                    <div>
+                        <p>
+                            Metaclasses seem to be an obscure, misunderstood area of Python’s object model. Here is a simple example that I’ve used to both understand and explain what metaclasses are, and how they can be used.
+                        </p>
+                    </div>
+                </div>
+                    </div>
+
+
+        <script>
+            $(document).ready(function(){
+                var $container = $('#container');
+
+                $container.isotope({
+                    itemSelector : '.item'
+                });
+
+                $('#filters a').click(function(){
+                    var selector = $(this).attr('data-filter');
+                    $container.isotope({ filter: selector });
+
+                    $('#filters a').removeClass('active');
+                    $(this).addClass('active');
+                    return false;
+                });
+
+                $('.item-post h2 a').lettering();
+            });
+        </script>
+
+        <script>
+            $(document).ready(function(){
+                $('.animated-link').lettering();
+            });
+        </script>
+        <footer>
+            <p class="copyright">&copy; 2013 James Brotchie</p>
+            <div>
+                <a href="http://twitter.com/brotchie"><span class="icon-2x icon-twitter"></span></a>
+                <a href="http://github.com/brotchie"><span class="icon-2x icon-github"></span></a>
+                <!--<span class="icon-2x icon-linkedin"></span>-->
+            </div>
+        </footer>
+
+    </body>
+</html>

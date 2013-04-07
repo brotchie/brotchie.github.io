@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>James Brotchie</title><link href="/" rel="alternate"></link><link href="/feeds/misc.atom.xml" rel="self"></link><id>/</id><updated>2010-02-02T00:00:00+10:00</updated><entry><title>Python bindings for more QuantLib term structure interpolation methods</title><link href="/term-structure-interpolation-methods-quantlib-python.html" rel="alternate"></link><updated>2010-02-02T00:00:00+10:00</updated><author><name>James Brotchie</name></author><id>tag:,2010-02-02:term-structure-interpolation-methods-quantlib-python.html</id><summary type="html">&lt;p&gt;The amazingly comprehensive open-source quantitative finance library QuantLib supplies a set of Python bindings generated with SWIG. Unfortunately much of QuantLib’s adaptability is made available via C++ templates. With the current SWIG wrapper it’s difficult to expose the entirety of QuantLib’s functionality without compiling every permutation of template parameter.&lt;/p&gt;
+&lt;p&gt;I discovered this quirk whilst trying to apply cubic spline interpolation to a zero curve. It turns out that by default the SWIG interface only exposes a linearly interpolated zero curve class. Fortunately there are some nice macros within the SWIG interface that ease the exposure of additional interpolation schemes, albeit with a recompile of the Python module.&lt;/p&gt;
+&lt;p&gt;Zero curves with additional interpolation methods can be added to the end of &lt;code&gt;QuantLib-SWIG-0.9.7/SWIG/zerocurve.i&lt;/code&gt; using the &lt;code&gt;export_zero_curve&lt;/code&gt; macro as follows:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;export_zero_curve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ZeroCurve&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Linear&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;export_zero_curve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CubicZeroCurve&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Cubic&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;After recompiling the Python bindings you’ll now have a &lt;code&gt;CubicZeroCurve&lt;/code&gt; class that performs cubic spline interpolation between data points.&lt;/p&gt;
+&lt;p&gt;This approach can be used throughout much of the SWIG interface files to expose template customized QuantLib classes.&lt;/p&gt;</summary><category term="python"></category></entry><entry><title>A simple python __metaclass__ example</title><link href="/simple-python-metaclass-example.html" rel="alternate"></link><updated>2009-11-23T00:00:00+10:00</updated><author><name>James Brotchie</name></author><id>tag:,2009-11-23:simple-python-metaclass-example.html</id><summary type="html">&lt;p&gt;Metaclasses seem to be an obscure, misunderstood area of Python’s object model. Here is a simple example that I’ve used to both understand and explain &lt;em&gt;what&lt;/em&gt; metaclasses are, and &lt;em&gt;how&lt;/em&gt; they can be used.&lt;/p&gt;
+&lt;p&gt;This code snippet was spawned from a colleague’s query.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;"What would be the most pythonic way to override a class type’s string representation?"&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Expressed in code, he wanted a new-style class type A to behave like&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;class &amp;#39;__main__.A&amp;#39;&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;&amp;#39;Hello World&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Unfotunately, overriding A’s &lt;code&gt;__str__&lt;/code&gt; method&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;A&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__str__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hello World&amp;quot;&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;class &amp;#39;__main__.A&amp;#39;&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;&amp;quot;&amp;lt;class &amp;#39;__main__.A&amp;#39;&amp;gt;&amp;quot;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="go"&gt;&amp;#39;Hello World&amp;#39;&lt;/span&gt;
+&lt;span class="go"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;only overrides the string representation of &lt;em&gt;instances&lt;/em&gt; of A, rather than &lt;em&gt;type&lt;/em&gt; A.&lt;/p&gt;
+&lt;p&gt;Metaclasses are the solution to this dilemma. My colleague’s conundrum can be solved by creating a new-style class with base &lt;code&gt;type&lt;/code&gt; and a &lt;code&gt;__str__&lt;/code&gt; method. This acts to override the &lt;code&gt;__str__&lt;/code&gt; method of A’s &lt;em&gt;type&lt;/em&gt; rather than instances of A.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;meta_A&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__str__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cls&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hello World&amp;quot;&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;A&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt; &lt;span class="n"&gt;__metaclass__&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;meta_A&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;
+&lt;span class="go"&gt;&amp;lt;class &amp;#39;__main__.A&amp;#39;&amp;gt;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;&amp;#39;Hello World&amp;#39;&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="go"&gt;&amp;#39;&amp;lt;__main__.A object at 0x10049e710&amp;gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Thus, we have a pythonic mechanism for overriding the string representation of any class type.&lt;/p&gt;
+&lt;p&gt;Note that there is new syntax in Python 3+ for specifying a metaclass.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt;&amp;gt;&amp;gt; &lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;A&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;metaclass&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;meta_A&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="gp"&gt;... &lt;/span&gt; &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;span class="gp"&gt;...&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="python"></category></entry></feed>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>James Brotchie - Finance ∪ Software ∪ Open Source</title>
+
+        <link href="http://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+
+        <link href="theme/css/style.less" rel="stylesheet/less" type="text/css"/>
+        <link href="theme/css/pygment.css" rel="stylesheet" type="text/css"/>
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.6.1/jquery.lettering.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/1.5.25/jquery.isotope.min.js"></script>
+    </head>
+    <body>
+            <div class="title-box article">
+        <h1><a href="/" class="animated-link">James Brotchie</a></h1>
+        <h2>Finance;<br>Software;<br>Open Source.</h2>
+    </div>
+
+    <div id="article-wrapper">
+        <article>
+        <h1><a class="animated-link" href="term-structure-interpolation-methods-quantlib-python.html">Python bindings for more QuantLib term structure interpolation methods</a></h1>
+            <h2>
+                <span class="author">James Brotchie</span><br>
+                <time class="timestamp">02 February 2010</time>
+            </h2>
+            <div class="entry-content">
+                <p>The amazingly comprehensive open-source quantitative finance library QuantLib supplies a set of Python bindings generated with SWIG. Unfortunately much of QuantLib’s adaptability is made available via C++ templates. With the current SWIG wrapper it’s difficult to expose the entirety of QuantLib’s functionality without compiling every permutation of template parameter.</p>
+<p>I discovered this quirk whilst trying to apply cubic spline interpolation to a zero curve. It turns out that by default the SWIG interface only exposes a linearly interpolated zero curve class. Fortunately there are some nice macros within the SWIG interface that ease the exposure of additional interpolation schemes, albeit with a recompile of the Python module.</p>
+<p>Zero curves with additional interpolation methods can be added to the end of <code>QuantLib-SWIG-0.9.7/SWIG/zerocurve.i</code> using the <code>export_zero_curve</code> macro as follows:</p>
+<div class="codehilite"><pre><span class="n">export_zero_curve</span><span class="p">(</span><span class="n">ZeroCurve</span><span class="p">,</span><span class="n">Linear</span><span class="p">);</span>
+<span class="n">export_zero_curve</span><span class="p">(</span><span class="n">CubicZeroCurve</span><span class="p">,</span><span class="n">Cubic</span><span class="p">);</span>
+</pre></div>
+
+
+<p>After recompiling the Python bindings you’ll now have a <code>CubicZeroCurve</code> class that performs cubic spline interpolation between data points.</p>
+<p>This approach can be used throughout much of the SWIG interface files to expose template customized QuantLib classes.</p>
+            </div>
+        </article>
+    </div>
+
+        <script>
+            $(document).ready(function(){
+                $('.animated-link').lettering();
+            });
+        </script>
+        <footer>
+            <p class="copyright">&copy; 2013 James Brotchie</p>
+            <div>
+                <a href="http://twitter.com/brotchie"><span class="icon-2x icon-twitter"></span></a>
+                <a href="http://github.com/brotchie"><span class="icon-2x icon-github"></span></a>
+                <!--<span class="icon-2x icon-linkedin"></span>-->
+            </div>
+        </footer>
+
+    </body>
+</html>
