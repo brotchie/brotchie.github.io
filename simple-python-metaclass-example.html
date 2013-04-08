@@ -18,20 +18,21 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/1.5.25/jquery.isotope.min.js"></script>
     </head>
     <body>
-            <div class="title-box article">
-        <h1><a href="/" class="animated-link">James Brotchie</a></h1>
-        <h2>Finance;<br>Software;<br>Open Source.</h2>
-    </div>
+            <div id="content">
+        <div class="title-box article">
+            <h1><a href="/" class="animated-link">James Brotchie</a></h1>
+            <h2>Finance;<br>Software;<br>Open Source.</h2>
+        </div>
 
-    <div id="article-wrapper">
-        <article>
-        <h1><a class="animated-link" href="simple-python-metaclass-example.html">A simple python __metaclass__ example</a></h1>
-            <h2>
-                <span class="author">James Brotchie</span><br>
-                <time class="timestamp">23 November 2009</time>
-            </h2>
-            <div class="entry-content">
-                <p>Metaclasses seem to be an obscure, misunderstood area of Python’s object model. Here is a simple example that I’ve used to both understand and explain <em>what</em> metaclasses are, and <em>how</em> they can be used.</p>
+        <div id="article-wrapper">
+            <article>
+            <h1><a class="animated-link" href="simple-python-metaclass-example.html">A simple python __metaclass__ example</a></h1>
+                <h2>
+                    <span class="author">James Brotchie</span><br>
+                    <time class="timestamp">23 November 2009</time>
+                </h2>
+                <div class="entry-content">
+                    <p>Metaclasses seem to be an obscure, misunderstood area of Python’s object model. Here is a simple example that I’ve used to both understand and explain <em>what</em> metaclasses are, and <em>how</em> they can be used.</p>
 <p>This code snippet was spawned from a colleague’s query.</p>
 <p><em>"What would be the most pythonic way to override a class type’s string representation?"</em></p>
 <p>Expressed in code, he wanted a new-style class type A to behave like</p>
@@ -81,8 +82,17 @@
 <span class="gp">... </span> <span class="k">pass</span>
 <span class="gp">...</span>
 </pre></div>
-            </div>
-        </article>
+                </div>
+            <footer>
+                <p class="copyright">&copy; 2013 James Brotchie</p>
+                <div>
+                    <a href="http://twitter.com/brotchie"><span class="icon-2x icon-twitter"></span></a>
+                    <a href="http://github.com/brotchie"><span class="icon-2x icon-github"></span></a>
+                    <!--<span class="icon-2x icon-linkedin"></span>-->
+                </div>
+            </footer>
+            </article>
+        </div>
     </div>
 
         <script>
@@ -90,14 +100,5 @@
                 $('.animated-link').lettering();
             });
         </script>
-        <footer>
-            <p class="copyright">&copy; 2013 James Brotchie</p>
-            <div>
-                <a href="http://twitter.com/brotchie"><span class="icon-2x icon-twitter"></span></a>
-                <a href="http://github.com/brotchie"><span class="icon-2x icon-github"></span></a>
-                <!--<span class="icon-2x icon-linkedin"></span>-->
-            </div>
-        </footer>
-
     </body>
 </html>

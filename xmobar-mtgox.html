@@ -26,22 +26,16 @@
 
         <div id="article-wrapper">
             <article>
-            <h1><a class="animated-link" href="term-structure-interpolation-methods-quantlib-python.html">Python bindings for more QuantLib term structure interpolation methods</a></h1>
+            <h1><a class="animated-link" href="xmobar-mtgox.html">Live MtGox BTC exchange rates in xmobar</a></h1>
                 <h2>
                     <span class="author">James Brotchie</span><br>
-                    <time class="timestamp">02 February 2010</time>
+                    <time class="timestamp">08 April 2013</time>
                 </h2>
                 <div class="entry-content">
-                    <p>The amazingly comprehensive open-source quantitative finance library QuantLib supplies a set of Python bindings generated with SWIG. Unfortunately much of QuantLib’s adaptability is made available via C++ templates. With the current SWIG wrapper it’s difficult to expose the entirety of QuantLib’s functionality without compiling every permutation of template parameter.</p>
-<p>I discovered this quirk whilst trying to apply cubic spline interpolation to a zero curve. It turns out that by default the SWIG interface only exposes a linearly interpolated zero curve class. Fortunately there are some nice macros within the SWIG interface that ease the exposure of additional interpolation schemes, albeit with a recompile of the Python module.</p>
-<p>Zero curves with additional interpolation methods can be added to the end of <code>QuantLib-SWIG-0.9.7/SWIG/zerocurve.i</code> using the <code>export_zero_curve</code> macro as follows:</p>
-<div class="codehilite"><pre><span class="n">export_zero_curve</span><span class="p">(</span><span class="n">ZeroCurve</span><span class="p">,</span><span class="n">Linear</span><span class="p">);</span>
-<span class="n">export_zero_curve</span><span class="p">(</span><span class="n">CubicZeroCurve</span><span class="p">,</span><span class="n">Cubic</span><span class="p">);</span>
-</pre></div>
-
-
-<p>After recompiling the Python bindings you’ll now have a <code>CubicZeroCurve</code> class that performs cubic spline interpolation between data points.</p>
-<p>This approach can be used throughout much of the SWIG interface files to expose template customized QuantLib classes.</p>
+                    <p>The bitcoin bubble is blowing up! and I have found it annoying keeping track of the BTCUSD and BTCAUD exchange rate on the MtGox website. Given that I'm already running <a href="http://projects.haskell.org/xmobar/">xmobar</a> wouldn't it be great if I could do this</p>
+<p><img alt="Example" src="https://raw.github.com/brotchie/xmobar-mtgox/master/mtgox.png" /></p>
+<p>and have the exchange rates update live.</p>
+<p>To this end I've written <a href="https://github.com/brotchie/xmobar-mtgox">xmobar-mtgox</a>, a Python script that outputs xmobar friendly BTC exchange rates. Installation and usage instruction are on the GitHub project landing page.</p>
                 </div>
             <footer>
                 <p class="copyright">&copy; 2013 James Brotchie</p>

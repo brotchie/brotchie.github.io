@@ -18,7 +18,8 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/1.5.25/jquery.isotope.min.js"></script>
     </head>
     <body>
-                <div class="title-box">
+                <div id="content">
+        <div class="title-box">
             <h1><a href="/" class="animated-link">James Brotchie</a></h1>
             <h2>Finance;<br>Software;<br>Open Source.</h2>
             <ul id="filters">
@@ -29,33 +30,59 @@
                 <li><a href="#" class="animated-link tag-open-source" data-filter=".tag-open-source">open source</a></li>
             </ul>
         </div>
-        <div id="container">
-                            <div class="item item-post tag-python">
-                    <div class="hrgroup">
-                        <h2><a href="/term-structure-interpolation-methods-quantlib-python.html" class="animated-link">Python bindings for more QuantLib term structure interpolation methods</a></h2>
-                        <h3 class="tag">python</h3>
-                        <h3 class="date">02 February 2010</h3>
+            <div id="container">
+                                    <div class="item item-post tag-open-source">
+                        <div class="hrgroup">
+                            <h2><a href="/xmobar-mtgox.html" class="animated-link">Live MtGox BTC exchange rates in xmobar</a></h2>
+                            <h3 class="tag">open source</h3>
+                            <h3 class="date">08 April 2013</h3>
+                        </div>
+                        <div>
+                            <p>
+                                I got sick of checking the MtGox website continuously for the BTCAUD exchange rate, hence xmobar-mtgox. A simple Python script to get last traded BTC rates from MtGox to xmobar.
+                            </p>
+                        </div>
                     </div>
-                    <div>
-                        <p>
-                            Out-of-the-box, QuantLib's Python bindings do not support the full range of term structure interpolation methods. I show how you can include additional interpolations by modifying QuantLib's SWIG interface files.
-                        </p>
+                                    <div class="item item-post tag-python">
+                        <div class="hrgroup">
+                            <h2><a href="/term-structure-interpolation-methods-quantlib-python.html" class="animated-link">Python bindings for more QuantLib term structure interpolation methods</a></h2>
+                            <h3 class="tag">python</h3>
+                            <h3 class="date">02 February 2010</h3>
+                        </div>
+                        <div>
+                            <p>
+                                Out-of-the-box, QuantLib's Python bindings do not support the full range of term structure interpolation methods. I show how you can include additional interpolations by modifying QuantLib's SWIG interface files.
+                            </p>
+                        </div>
                     </div>
-                </div>
-                            <div class="item item-post tag-python">
-                    <div class="hrgroup">
-                        <h2><a href="/simple-python-metaclass-example.html" class="animated-link">A simple python __metaclass__ example</a></h2>
-                        <h3 class="tag">python</h3>
-                        <h3 class="date">23 November 2009</h3>
+                                    <div class="item item-post tag-python">
+                        <div class="hrgroup">
+                            <h2><a href="/simple-python-metaclass-example.html" class="animated-link">A simple python __metaclass__ example</a></h2>
+                            <h3 class="tag">python</h3>
+                            <h3 class="date">23 November 2009</h3>
+                        </div>
+                        <div>
+                            <p>
+                                Metaclasses seem to be an obscure, misunderstood area of Python’s object model. Here is a simple example that I’ve used to both understand and explain what metaclasses are, and how they can be used.
+                            </p>
+                        </div>
                     </div>
-                    <div>
-                        <p>
-                            Metaclasses seem to be an obscure, misunderstood area of Python’s object model. Here is a simple example that I’ve used to both understand and explain what metaclasses are, and how they can be used.
-                        </p>
-                    </div>
-                </div>
-                    </div>
+                                <div class="item">
+                    <a class="twitter-timeline" height="400px" width="250px" href="https://twitter.com/brotchie" data-widget-id="320854511029731329">Tweets by @brotchie</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
+                </div>
+            </div>
+
+            <footer>
+                    <p class="copyright">&copy; 2013 James Brotchie</p>
+                    <div>
+                        <a href="http://twitter.com/brotchie"><span class="icon-2x icon-twitter"></span></a>
+                        <a href="http://github.com/brotchie"><span class="icon-2x icon-github"></span></a>
+                        <!--<span class="icon-2x icon-linkedin"></span>-->
+                    </div>
+            </footer>
+        </div>
 
         <script>
             $(document).ready(function(){
@@ -83,14 +110,5 @@
                 $('.animated-link').lettering();
             });
         </script>
-        <footer>
-            <p class="copyright">&copy; 2013 James Brotchie</p>
-            <div>
-                <a href="http://twitter.com/brotchie"><span class="icon-2x icon-twitter"></span></a>
-                <a href="http://github.com/brotchie"><span class="icon-2x icon-github"></span></a>
-                <!--<span class="icon-2x icon-linkedin"></span>-->
-            </div>
-        </footer>
-
     </body>
 </html>
