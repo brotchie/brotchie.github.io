@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>James Brotchie - Finance ∪ Software ∪ Open Source</title>
+
+        <link href="http://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+
+        <link href="theme/css/normalize.css" rel="stylesheet" type="text/css"/>
+        <link href="theme/css/style.less" rel="stylesheet/less" type="text/css"/>
+        <link href="theme/css/pygment.css" rel="stylesheet" type="text/css"/>
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.6.1/jquery.lettering.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/1.5.25/jquery.isotope.min.js"></script>
+    </head>
+    <body>
+            <div id="content">
+        <div class="title-box article">
+            <h1><a href="/" class="animated-link">James Brotchie</a></h1>
+            <h2>Finance;<br>Software;<br>Open Source.</h2>
+        </div>
+
+        <div id="article-wrapper">
+            <article>
+            <h1><a class="animated-link" href="grad-stack.html">My grad school "software stack"</a></h1>
+                <h2>
+                    <span class="author">James Brotchie</span><br>
+                    <time class="timestamp">15 April 2013</time>
+                </h2>
+                <div class="entry-content">
+                    <h2>CrashPlan and github for versioning and backup</h2>
+<p><strong>I cannot stress how important this is over and above all the other software you use in your research. The other software you use means nothing as long as a mistake by you, or a hardware failure, can destroy years of work.</strong></p>
+<p>CrashPlan is setup to backup my home directory, so I never worry about loosing things. Because the university internet connection is so fast I don't have to worry about upload bandwidth.</p>
+<p>I have a <code>phd</code> repository in which I commit ALL my notes, papers in progress, source code, etc. I'll commit and push this to a private github repo every day. This means I have a full, versioned, backup of all my work.</p>
+<p>Having these backup plans in place has saved my ass TWICE. I've had the SSD on my old laptop die twice and lost only a minimal amount of work because of CrashPlan and git.</p>
+<h2>Mendeley for reference management</h2>
+<p>Watches <code>~/Downloads/bibtex</code> for new .pdfs so that every paper I download is added to my reference library.</p>
+<p>Automatically outputs my references as <code>.bib</code> BibTeX files to <code>~/Documents/bibtex</code>.</p>
+<p>Renames and writes all my references as <code>.pdfs</code> to <code>~/Documents/Papers</code> which I sync to Dropbox.</p>
+<h2>GoodReader on iPad for reading papers</h2>
+<p>GoodReader syncs with my Dropbox <code>Papers</code> folder so that my iPad documents are always in sync with Mendeley.</p>
+<p>When I annotate papers with highlights and notes I follow a colour scheme: Yellow for interesting aspects of the paper, Green for references I should follow up on, Blue for good ideas that may warrant further research.</p>
+<h2>Vim and LaTeX for writing papers</h2>
+<p>If you're compiling LaTeX documents by hand then have a look at <strong>rubber</strong> which lets you compile, bibtex, and pdf in a single command <code>rubber -d paper.tex</code>.</p>
+<p>Vim is setup so that if I press <code>mm</code> then it compiles the currently open document into a <code>.pdf</code> and if I type <code>mv</code> is compiles AND opens the resulting document in Evince.</p>
+<p>I've created a LaTeX package <code>phd</code> then includes all the packages I usually use so that a fresh LaTeX article is only four lines of boilerplate.</p>
+<h2>Google Tasks and Evernote for random note taking</h2>
+<p>For bigger notes I'll just create a new LaTeX document and commit it to my git repo.</p>
+<p>For really small reminders when I think of something relevant to my research I'll create a Google task. When I come to review this little snippets I'll enter them as more permanents notes in Evernote. </p>
+                </div>
+            <footer>
+                <p class="copyright">&copy; 2013 James Brotchie</p>
+                <div>
+                    <a href="http://twitter.com/brotchie"><span class="icon-2x icon-twitter"></span></a>
+                    <a href="http://github.com/brotchie"><span class="icon-2x icon-github"></span></a>
+                    <!--<span class="icon-2x icon-linkedin"></span>-->
+                </div>
+            </footer>
+            </article>
+        </div>
+    </div>
+
+        <script>
+            $(document).ready(function(){
+                $('.animated-link').lettering();
+            });
+        </script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-39954523-1', 'github.io');
+          ga('send', 'pageview');
+
+        </script>
+    </body>
+</html>
