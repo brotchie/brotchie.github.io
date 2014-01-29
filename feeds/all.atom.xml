@@ -1,5 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>James Brotchie</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2013-04-16T00:00:00+10:00</updated><entry><title>My favourite finance books</title><link href="/favourite-finance-books.html" rel="alternate"></link><updated>2013-04-16T00:00:00+10:00</updated><author><name>James Brotchie</name></author><id>tag:,2013-04-16:favourite-finance-books.html</id><summary type="html">&lt;p&gt;I sent this list to a friend when he asked for a few "non mathematically hardcore" finance books to read.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>James Brotchie</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2014-01-29T00:00:00+10:00</updated><entry><title>Spending Non-Wallet Dogecoin Transactions</title><link href="/dogecoin-raw-transaction.html" rel="alternate"></link><updated>2014-01-29T00:00:00+10:00</updated><author><name>James Brotchie</name></author><id>tag:,2014-01-29:dogecoin-raw-transaction.html</id><summary type="html">&lt;p&gt;There is a set of raw transaction commands exposed via the dogecoind JSON-RPC interface.&lt;/p&gt;
+&lt;p&gt;Here's an example of spending a transaction when you have the private key of one of its outputs but that private key isn't in a wallet.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;txid&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;ffa2c2058f0bc010fa391100ed7fdef0393acffcd9dd16082677a6c2479d208b&lt;/span&gt;
+&lt;span class="n"&gt;vout&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="n"&gt;amount&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;482080&lt;/span&gt;
+&lt;span class="n"&gt;scriptPubKey&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;210284&lt;/span&gt;&lt;span class="n"&gt;ca3007f08bb8a597328c013f8436b0b45d135f8f0fd2d4d5183fa5dd0f41caac&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The public key and private key associated with the scriptPubKey is&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;public_key&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;nh78WoMnS9F7GF266YHEq8Y9K66CV3z2C8&lt;/span&gt;
+&lt;span class="n"&gt;private_key&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;chG1LhVjM5vnfmFdo95Ge5G132zsFt2PSLGj1e5gtWdsG3bDfJQe&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Because I know the private_key associated with this transaction output I can spend it how I wish. What I want to do is spend this transaction to some target public address&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;target_public_key&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;nr2Yu21WoUGMb4pLhagcqNYHeUsJwwQBhu&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I do this using dogecoind as follow:&lt;/p&gt;
+&lt;h3&gt;Create Raw Transaction&lt;/h3&gt;
+&lt;p&gt;Create a raw transaction with the txid, vout, and target public key from above. The send amount to the public key is one less (482079) than the spendable output (482080) because of a 1 doge transfer fee.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Template&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;createrawtransaction&lt;/span&gt; 
+    &lt;span class="o"&gt;[{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;txid&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$txid&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;vout&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;$vout&lt;/span&gt;&lt;span class="o"&gt;}]&lt;/span&gt;
+    &lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$target_public_key&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;$amount&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;createrawtransaction&lt;/span&gt; 
+    &lt;span class="o"&gt;[{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;txid&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ffa2c2058f0bc010fa391100ed7fdef0393acffcd9dd16082677a6c2479d208b&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;vout&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;}]&lt;/span&gt;
+    &lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;nr2Yu21WoUGMb4pLhagcqNYHeUsJwwQBhu&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;482079&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will return the hex representation as&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="mo"&gt;0100000001&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="n"&gt;b209d47c2a677260816ddd9fccf3a39f0de7fed001139fa10c00b8f05c2a2ff0000000000ffffffff01003fc146d82b00001976a914ef81804d284e1c623d56c23f28c7bdad8d8d00a988ac00000000&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Not that this is a raw &lt;strong&gt;unsigned&lt;/strong&gt; transaction. Before we transmit it we need to sign it with all the private keys of the input transactions.&lt;/p&gt;
+&lt;h3&gt;Sign Raw Transaction&lt;/h3&gt;
+&lt;p&gt;Sign the raw transaction with the private key, note &lt;em&gt;unsigned_hex&lt;/em&gt; is the hex representation of the transaction from the previous step.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Template&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;span class="n"&gt;signrawtransaction&lt;/span&gt; &lt;span class="n"&gt;$unsigned_hex&lt;/span&gt; &lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$private_key&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;signrawtransaction&lt;/span&gt; &lt;span class="mi"&gt;01000000018&lt;/span&gt;&lt;span class="n"&gt;b209d47c2a677260816ddd9fccf3a39f0de7fed001139fa10c00b8f05c2a2ff0000000000ffffffff01003fc146d82b00001976a914ef81804d284e1c623d56c23f28c7bdad8d8d00a988ac00000000&lt;/span&gt; &lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;chG1LhVjM5vnfmFdo95Ge5G132zsFt2PSLGj1e5gtWdsG3bDfJQe&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If the private key is correct then this will return a JSON object with the &lt;em&gt;complete&lt;/em&gt; field set to true. The signed transaction is returned in the &lt;em&gt;hex&lt;/em&gt; field.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;hex&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;01000000018b209d47c2a677260816ddd9fccf3a39f0de7fed001139fa10c00b8f05c2a2ff0000000048473044022052c32ad49591eb538c52f30930074b7d24523094a66635146687af52c7f715d502207825dd3f5e03b4cec38119fdec358256832be83762cd252e77598f81a982b4e701ffffffff01003fc146d82b00001976a914ef81804d284e1c623d56c23f28c7bdad8d8d00a988ac00000000&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;complete&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Spend Raw Transaction&lt;/h3&gt;
+&lt;p&gt;You can now broadcast this transaction over the p2p network.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Template&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;sendrawtransaction&lt;/span&gt; &lt;span class="n"&gt;$signed_hex&lt;/span&gt;
+
+&lt;span class="n"&gt;sendrawtransaction&lt;/span&gt; &lt;span class="mi"&gt;01000000018&lt;/span&gt;&lt;span class="n"&gt;b209d47c2a677260816ddd9fccf3a39f0de7fed001139fa10c00b8f05c2a2ff0000000048473044022052c32ad49591eb538c52f30930074b7d24523094a66635146687af52c7f715d502207825dd3f5e03b4cec38119fdec358256832be83762cd252e77598f81a982b4e701ffffffff01003fc146d82b00001976a914ef81804d284e1c623d56c23f28c7bdad8d8d00a988ac00000000&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will return the txid of the sent transaction.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;acd897d728d69b21665a0fd09d6a4c17fad7c2fb0d29d3261ece50dc938a861e&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Not that nowhere in this process do I have to put anything in my wallet! I could run a new instance of dogecoind offline, type in the transaction details, public, and private keys, and generate a signed transaction. I could then paste this signed transaction's hex into an email to you and you send it via the network, without you having the private key!&lt;/p&gt;
+&lt;p&gt;I've just implemented this for a dogecoind based payment system and it works great! The raw transaction API is very very useful once you wrap your head around it.&lt;/p&gt;</summary><category term="open source"></category></entry><entry><title>My favourite finance books</title><link href="/favourite-finance-books.html" rel="alternate"></link><updated>2013-04-16T00:00:00+10:00</updated><author><name>James Brotchie</name></author><id>tag:,2013-04-16:favourite-finance-books.html</id><summary type="html">&lt;p&gt;I sent this list to a friend when he asked for a few "non mathematically hardcore" finance books to read.&lt;/p&gt;
 &lt;h2&gt;Here's a good list of finance books that aren't highly technical&lt;/h2&gt;
 &lt;style&gt;
     img {
@@ -25,7 +95,7 @@
  &lt;div class="clear"&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img class="cover-right" src="static/images/covers/rogue-trader.jpg"&gt;&lt;/p&gt;
 &lt;h3&gt;&lt;a href="http://www.amazon.com/gp/product/0751517089/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;amp;camp=1789&amp;amp;creative=9325&amp;amp;creativeASIN=0751517089&amp;amp;linkCode=as2&amp;amp;tag=jambrosblo00-20"&gt;Rogue trader - Nick Leeson&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;The first-hand account by Nick Neeson of the events that lead up to the collapse of Barings bank.
+&lt;p&gt;The first-hand account by Nick Leeson of the events that lead up to the collapse of Barings bank.
 &lt;div class="clear"&gt;&lt;/div&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img class="cover-left" src="static/images/covers/barbarians-at-the-gate.jpg"&gt;&lt;/p&gt;
 &lt;h3&gt;&lt;a href="http://www.amazon.com/gp/product/0061655554/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;amp;camp=1789&amp;amp;creative=9325&amp;amp;creativeASIN=0061655554&amp;amp;linkCode=as2&amp;amp;tag=jambrosblo00-20"&gt;Barbarians at the Gate: The Fall of RJR Nabisco - Bryan Burrough, John Helyar&lt;/a&gt;&lt;/h3&gt;

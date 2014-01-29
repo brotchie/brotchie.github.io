@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>James Brotchie - Finance ∪ Software ∪ Open Source</title>
+
+        <link href="http://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+
+        <link href="theme/css/normalize.css" rel="stylesheet" type="text/css"/>
+        <link href="theme/css/style.less" rel="stylesheet/less" type="text/css"/>
+        <link href="theme/css/pygment.css" rel="stylesheet" type="text/css"/>
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.6.1/jquery.lettering.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/1.5.25/jquery.isotope.min.js"></script>
+    </head>
+    <body>
+            <div id="content">
+        <div class="title-box article">
+            <h1><a href="/" class="animated-link">James Brotchie</a></h1>
+            <h2>Finance;<br>Software;<br>Open Source.</h2>
+        </div>
+
+        <div id="article-wrapper">
+            <article>
+            <h1><a class="animated-link" href="dogecoin-raw-transaction.html">Spending Non-Wallet Dogecoin Transactions</a></h1>
+                <h2>
+                    <span class="author">James Brotchie</span><br>
+                    <time class="timestamp">29 January 2014</time>
+                </h2>
+                <div class="entry-content">
+                    <p>There is a set of raw transaction commands exposed via the dogecoind JSON-RPC interface.</p>
+<p>Here's an example of spending a transaction when you have the private key of one of its outputs but that private key isn't in a wallet.</p>
+<div class="codehilite"><pre><span class="n">txid</span><span class="o">:</span> <span class="n">ffa2c2058f0bc010fa391100ed7fdef0393acffcd9dd16082677a6c2479d208b</span>
+<span class="n">vout</span><span class="o">:</span> <span class="mi">0</span>
+<span class="n">amount</span><span class="o">:</span> <span class="mi">482080</span>
+<span class="n">scriptPubKey</span><span class="o">:</span> <span class="mi">210284</span><span class="n">ca3007f08bb8a597328c013f8436b0b45d135f8f0fd2d4d5183fa5dd0f41caac</span>
+</pre></div>
+
+
+<p>The public key and private key associated with the scriptPubKey is</p>
+<div class="codehilite"><pre><span class="n">public_key</span><span class="o">:</span> <span class="n">nh78WoMnS9F7GF266YHEq8Y9K66CV3z2C8</span>
+<span class="n">private_key</span><span class="o">:</span> <span class="n">chG1LhVjM5vnfmFdo95Ge5G132zsFt2PSLGj1e5gtWdsG3bDfJQe</span>
+</pre></div>
+
+
+<p>Because I know the private_key associated with this transaction output I can spend it how I wish. What I want to do is spend this transaction to some target public address</p>
+<div class="codehilite"><pre><span class="n">target_public_key</span><span class="o">:</span> <span class="n">nr2Yu21WoUGMb4pLhagcqNYHeUsJwwQBhu</span>
+</pre></div>
+
+
+<p>I do this using dogecoind as follow:</p>
+<h3>Create Raw Transaction</h3>
+<p>Create a raw transaction with the txid, vout, and target public key from above. The send amount to the public key is one less (482079) than the spendable output (482080) because of a 1 doge transfer fee.</p>
+<div class="codehilite"><pre><span class="n">Template</span><span class="o">:</span> <span class="n">createrawtransaction</span> 
+    <span class="o">[{</span><span class="s2">&quot;txid&quot;</span><span class="o">:</span> <span class="s2">&quot;$txid&quot;</span><span class="o">,</span> <span class="s2">&quot;vout&quot;</span><span class="o">:</span> <span class="n">$vout</span><span class="o">}]</span>
+    <span class="o">{</span><span class="s2">&quot;$target_public_key&quot;</span><span class="o">:</span> <span class="n">$amount</span> <span class="o">-</span> <span class="mi">1</span><span class="o">}</span>
+
+<span class="n">createrawtransaction</span> 
+    <span class="o">[{</span><span class="s2">&quot;txid&quot;</span><span class="o">:</span> <span class="s2">&quot;ffa2c2058f0bc010fa391100ed7fdef0393acffcd9dd16082677a6c2479d208b&quot;</span><span class="o">,</span> <span class="s2">&quot;vout&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="o">}]</span>
+    <span class="o">{</span><span class="s2">&quot;nr2Yu21WoUGMb4pLhagcqNYHeUsJwwQBhu&quot;</span><span class="o">:</span> <span class="mi">482079</span><span class="o">}</span>
+</pre></div>
+
+
+<p>This will return the hex representation as</p>
+<div class="codehilite"><pre><span class="mo">0100000001</span><span class="mi">8</span><span class="n">b209d47c2a677260816ddd9fccf3a39f0de7fed001139fa10c00b8f05c2a2ff0000000000ffffffff01003fc146d82b00001976a914ef81804d284e1c623d56c23f28c7bdad8d8d00a988ac00000000</span>
+</pre></div>
+
+
+<p>Not that this is a raw <strong>unsigned</strong> transaction. Before we transmit it we need to sign it with all the private keys of the input transactions.</p>
+<h3>Sign Raw Transaction</h3>
+<p>Sign the raw transaction with the private key, note <em>unsigned_hex</em> is the hex representation of the transaction from the previous step.</p>
+<div class="codehilite"><pre><span class="n">Template</span><span class="o">:</span>
+<span class="n">signrawtransaction</span> <span class="n">$unsigned_hex</span> <span class="o">[]</span> <span class="o">[</span><span class="s2">&quot;$private_key&quot;</span><span class="o">]</span>
+
+<span class="n">signrawtransaction</span> <span class="mi">01000000018</span><span class="n">b209d47c2a677260816ddd9fccf3a39f0de7fed001139fa10c00b8f05c2a2ff0000000000ffffffff01003fc146d82b00001976a914ef81804d284e1c623d56c23f28c7bdad8d8d00a988ac00000000</span> <span class="o">[]</span> <span class="o">[</span><span class="s2">&quot;chG1LhVjM5vnfmFdo95Ge5G132zsFt2PSLGj1e5gtWdsG3bDfJQe&quot;</span><span class="o">]</span>
+</pre></div>
+
+
+<p>If the private key is correct then this will return a JSON object with the <em>complete</em> field set to true. The signed transaction is returned in the <em>hex</em> field.</p>
+<div class="codehilite"><pre><span class="p">{</span>
+    <span class="s">&quot;hex&quot;</span> <span class="o">:</span> <span class="s">&quot;01000000018b209d47c2a677260816ddd9fccf3a39f0de7fed001139fa10c00b8f05c2a2ff0000000048473044022052c32ad49591eb538c52f30930074b7d24523094a66635146687af52c7f715d502207825dd3f5e03b4cec38119fdec358256832be83762cd252e77598f81a982b4e701ffffffff01003fc146d82b00001976a914ef81804d284e1c623d56c23f28c7bdad8d8d00a988ac00000000&quot;</span><span class="p">,</span>
+    <span class="s">&quot;complete&quot;</span> <span class="o">:</span> <span class="nb">true</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h3>Spend Raw Transaction</h3>
+<p>You can now broadcast this transaction over the p2p network.</p>
+<div class="codehilite"><pre><span class="n">Template</span><span class="o">:</span> <span class="n">sendrawtransaction</span> <span class="n">$signed_hex</span>
+
+<span class="n">sendrawtransaction</span> <span class="mi">01000000018</span><span class="n">b209d47c2a677260816ddd9fccf3a39f0de7fed001139fa10c00b8f05c2a2ff0000000048473044022052c32ad49591eb538c52f30930074b7d24523094a66635146687af52c7f715d502207825dd3f5e03b4cec38119fdec358256832be83762cd252e77598f81a982b4e701ffffffff01003fc146d82b00001976a914ef81804d284e1c623d56c23f28c7bdad8d8d00a988ac00000000</span>
+</pre></div>
+
+
+<p>This will return the txid of the sent transaction.</p>
+<div class="codehilite"><pre><span class="n">acd897d728d69b21665a0fd09d6a4c17fad7c2fb0d29d3261ece50dc938a861e</span>
+</pre></div>
+
+
+<p>Not that nowhere in this process do I have to put anything in my wallet! I could run a new instance of dogecoind offline, type in the transaction details, public, and private keys, and generate a signed transaction. I could then paste this signed transaction's hex into an email to you and you send it via the network, without you having the private key!</p>
+<p>I've just implemented this for a dogecoind based payment system and it works great! The raw transaction API is very very useful once you wrap your head around it.</p>
+                </div>
+            <footer>
+                <p class="copyright">&copy; 2013 James Brotchie</p>
+                <div>
+                    <a href="http://twitter.com/brotchie"><span class="icon-2x icon-twitter"></span></a>
+                    <a href="http://github.com/brotchie"><span class="icon-2x icon-github"></span></a>
+                    <!--<span class="icon-2x icon-linkedin"></span>-->
+                </div>
+            </footer>
+            </article>
+        </div>
+    </div>
+
+        <script>
+            $(document).ready(function(){
+                $('.animated-link').lettering();
+            });
+        </script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-39954523-1', 'github.io');
+          ga('send', 'pageview');
+
+        </script>
+    </body>
+</html>
