@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>James Brotchie</title><link href="/" rel="alternate"></link><link href="/feeds/misc.atom.xml" rel="self"></link><id>/</id><updated>2014-01-29T00:00:00+10:00</updated><entry><title>Spending Non-Wallet Dogecoin Transactions</title><link href="/dogecoin-raw-transaction.html" rel="alternate"></link><updated>2014-01-29T00:00:00+10:00</updated><author><name>James Brotchie</name></author><id>tag:,2014-01-29:dogecoin-raw-transaction.html</id><summary type="html">&lt;p&gt;There is a set of raw transaction commands exposed via the dogecoind JSON-RPC interface.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>James Brotchie</title><link href="/" rel="alternate"></link><link href="/feeds/misc.atom.xml" rel="self"></link><id>/</id><updated>2014-01-29T00:00:00+10:00</updated><entry><title>Spending Non-Wallet Dogecoin Transactions</title><link href="/dogecoin-raw-transaction.html" rel="alternate"></link><updated>2014-01-29T00:00:00+10:00</updated><author><name>James Brotchie</name></author><id>tag:,2014-01-29:dogecoin-raw-transaction.html</id><summary type="html">&lt;div style="text-align: center"&gt;
+&lt;img width="300" height="300" src="static/images/dogecoin-300.png"&gt;
+&lt;/div&gt;
+
+&lt;p&gt;There is a set of raw transaction commands exposed via the dogecoind JSON-RPC interface.&lt;/p&gt;
 &lt;p&gt;Here's an example of spending a transaction when you have the private key of one of its outputs but that private key isn't in a wallet.&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;txid&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;ffa2c2058f0bc010fa391100ed7fdef0393acffcd9dd16082677a6c2479d208b&lt;/span&gt;
 &lt;span class="n"&gt;vout&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
